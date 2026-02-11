@@ -1,6 +1,7 @@
 "use client";
 
-import { useFormStatus } from "react-dom";
+import { useFormStatus , useFormState} from "react-dom";
+import { useState, useEffect } from "react";
 import clsx from "clsx";
 import {
   TbArrowBigDown,
@@ -11,11 +12,23 @@ import {
 import { FaSpinner } from "react-icons/fa";
 
 export function VoteButtons({ upvote, downvote, votes, existingVote }) {
+
   const { pending, data, method, action } = useFormStatus();
+
+    // add errors to client
+  const [error, setError] = useState(null)
+  async function handleAction(action){
+    const result = await action();
+
+    if (result?.error){
+      setError(result.error);
+      setTimeout(()=> setError(null), 3000)
+    }
+  }
 
   return (
     <>
-      <button formAction={upvote}>
+      <button formAction={()=> handleAction(upvote)}>
         {existingVote?.vote === 1 ? (
           <TbArrowBigUpFilled
             size={24}
@@ -32,6 +45,7 @@ export function VoteButtons({ upvote, downvote, votes, existingVote }) {
           />
         )}
       </button>
+
       <span className="w-6 text-center tabular-nums">
         {pending ? (
           <span className="animate-spin h-6  w-6 flex items-center justify-center">
@@ -41,7 +55,8 @@ export function VoteButtons({ upvote, downvote, votes, existingVote }) {
           votes
         )}
       </span>
-      <button formAction={downvote}>
+
+      <button formAction={()=>handleAction(downvote)}>
         {existingVote?.vote === -1 ? (
           <TbArrowBigDownFilled
             size={24}
@@ -58,6 +73,12 @@ export function VoteButtons({ upvote, downvote, votes, existingVote }) {
           />
         )}
       </button>
+
+      {error &&(
+        <span className="text-red-400 text-sm ml-2">
+          {error}
+        </span>
+      )}
     </>
   );
 }

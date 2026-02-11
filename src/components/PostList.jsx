@@ -4,15 +4,36 @@ import { Vote } from "./Vote";
 import { db } from "@/db";
 import { POSTS_PER_PAGE } from "@/config";
 
-export async function PostList({ currentPage = 1 }) {
+export async function PostList({ currentPage = 1, sort="top"}) {
+
+    // add some sorting functionality
+  const orderBy =
+  sort === "recent"
+    ? "posts.created_at DESC"
+    : "vote_total DESC"; // default = top
+
+
+  // const query=await searchParams
+  // if (query.sort === "asc"){
+  //   posts.sort(
+  //     (a,b) => new Date(a.created_at) - new Date (b.created_at)
+  //   )
+  // }
+  // if (query.sort === "desc"){
+  //   posts.sort(
+  //     (a,b) => new Date(b.created_at) - new Date (a.created_at)
+  //   )
+  // }
+
   const { rows: posts } =
-    await db.query(`SELECT posts.id, posts.title, posts.body, posts.created_at, users.name, 
+    await db.query(`
+    SELECT posts.id, posts.title, posts.body, posts.created_at, users.name, 
     COALESCE(SUM(votes.vote), 0) AS vote_total
      FROM posts
      JOIN users ON posts.user_id = users.id
      LEFT JOIN votes ON votes.post_id = posts.id
      GROUP BY posts.id, users.name
-     ORDER BY vote_total DESC
+      ORDER BY ${orderBy}
      LIMIT ${POSTS_PER_PAGE}
      OFFSET ${POSTS_PER_PAGE * (currentPage - 1)}`);
 

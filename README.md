@@ -61,3 +61,12 @@ Stretch goals:
 - Fix page titles on post pages to match post titles
 I wasn't 100% sure what this meant, as on the post pages the title of the post is right there. So I checked Reddit and I thought maybe it meant the text in the tab, as Reddit has that feature when you click on a post. I assumed this was metadata - I looked at how this was done in the layout and copied it over, adding in code so it used the title entered into the db. I got an error for this initially due to cookies, but then it wasn't too difficult to generate the metadata to get the page title to match the post title.
 
+- Handle the error when you click to vote while not logged in to show a nice error message
+Error handler added to Vote (server side - to do the logic of it) and the VoteButton (client side - to give the user a message of why the vote doesn't work)
+
+-Try to make it so I can’t vote more than once
+I wanted to try doing this in SQL by setting some parameters so that in the votes table the userid for that particular post is unique - one vote per user per post
+I wanted to focus only on post voting (not comment voting as was in SQL) - I realised this was already applied just by what I uncommented in SQL earlier?
+
+- - [ ] Sorting posts by recent (date posted), top (most upvotes), and most controversial (most upvotes _and_ downvotes)
+i looked up some ways to do this but content seemed overly complicated. I decided to look back at my week 8 assignment where i implemented sorting for the hike posts. However once I got into that I realised it probably wasn't the best solution because that one links to a new page with asc or desc - but I want this to apply only to the component, so the sorting can be reused wherever the component is reused. I went back to the more complicated method. I created a default order, created a sorting component which allows the user to handle the sort, and imported that into the page

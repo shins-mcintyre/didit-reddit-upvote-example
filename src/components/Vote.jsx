@@ -15,7 +15,8 @@ async function getExistingVote(userId, postId) {
 async function handleVote(userId, postId, newVote) {
   // Check if the user has already voted on this post
   if (!userId) {
-    throw new Error("Cannot vote without being logged in");
+    // throw new Error("Cannot vote without being logged in");
+    return {error: "Please log in to vote"};
   }
 
   const existingVote = await getExistingVote(userId, postId);
@@ -41,6 +42,8 @@ async function handleVote(userId, postId, newVote) {
 
   // revalidatePath("/");
   revalidatePath(`/post/${postId}`);
+
+  return{success:true};
 }
 
 export async function Vote({ postId, votes }) {
@@ -49,12 +52,12 @@ export async function Vote({ postId, votes }) {
 
   async function upvote() {
     "use server";
-    await handleVote(session?.user?.id, postId, 1);
+    return await handleVote(session?.user?.id, postId, 1);
   }
 
   async function downvote() {
     "use server";
-    await handleVote(session?.user?.id, postId, -1);
+    return await handleVote(session?.user?.id, postId, -1);
   }
 
   return (
