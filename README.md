@@ -46,3 +46,13 @@ The project is a work in progress and is not yet complete.
 - [ ] User following
 - [ ] User feed (posts from users you follow)
 - [ ] User flair
+
+
+<!-- BUGS/things i did -->
+1. followed setup instructions
+2. in SQL votes table 'UNIQUE' line commented out so uncommented it to work
+3. set up next auth following video tutorial - login working
+4. added env variables to vercel & redeployed
+5. tested deployed link and login not working now - it now says the redirect_uri is not associated with this application - searched redirect in project and it seems ok 
+6. realised the issue was that in the OAuth the callback url still said localhost (as per video) so created a new OAuth with the vercel deployment link (so I can use either) - left local keys in .env and put production codes in vercel environment variables - redeployed and now it works!
+7. Next I want to look through all the code to familiarise myself with what pages/components there are, and then make a start with stretch goals
