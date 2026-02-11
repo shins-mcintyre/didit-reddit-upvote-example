@@ -48,7 +48,7 @@ The project is a work in progress and is not yet complete.
 - [ ] User flair
 
 
-<!-- BUGS/things i did -->
+## What I did
 1. followed setup instructions
 2. in SQL votes table 'UNIQUE' line commented out so uncommented it to work
 3. set up next auth following video tutorial - login working
