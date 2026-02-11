@@ -3,6 +3,19 @@ import { CommentList } from "@/components/CommentList";
 import { Vote } from "@/components/Vote";
 import { db } from "@/db";
 
+// change page title to match post:
+export async function generateMetadata ({params}){
+  // fetch post
+  const { rows } =
+      await db.query(`SELECT title FROM posts WHERE id=$1`, 
+        [params.postId]
+      );
+      const post = rows[0];
+
+  return {title: post?.title ?? "Post not found",
+};
+}
+
 export default async function SinglePostPage({ params }) {
   const postId = params.postId;
 

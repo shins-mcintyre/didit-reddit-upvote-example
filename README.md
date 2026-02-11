@@ -56,3 +56,8 @@ The project is a work in progress and is not yet complete.
 5. tested deployed link and login not working now - it now says the redirect_uri is not associated with this application - searched redirect in project and it seems ok 
 6. realised the issue was that in the OAuth the callback url still said localhost (as per video) so created a new OAuth with the vercel deployment link (so I can use either) - left local keys in .env and put production codes in vercel environment variables - redeployed and now it works!
 7. Next I want to look through all the code to familiarise myself with what pages/components there are, and then make a start with stretch goals
+
+Stretch goals:
+- Fix page titles on post pages to match post titles
+I wasn't 100% sure what this meant, as on the post pages the title of the post is right there. So I checked Reddit and I thought maybe it meant the text in the tab, as Reddit has that feature when you click on a post. I assumed this was metadata - I looked at how this was done in the layout and copied it over, adding in code so it used the title entered into the db. I got an error for this initially due to cookies, but then it wasn't too difficult to generate the metadata to get the page title to match the post title.
+
